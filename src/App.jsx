@@ -1,47 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
 import {Component, useState, useEffect} from "react";
 import React from 'react';
-import FilmsList from './component/filmsList';
+import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
+import { FilmPage, HomePage } from './pages/index.jsx';
+import { FilterFilmsByDirector } from "./helpers/film.helpers.js"
 
 function App(props){
-  let [list, setList] = useState(["ready", "set", "GO!"])
-  let [text, setText] = useState("")
-
-  function onSubmit(event){
-    event.preventDefault();
-    let newList = [...list, text];
-    setList(newList);
-    setText("");
-  }
-  function removeItem(event){
-    event.preventDefault();
-    let newList = [list.pop(), text]
-    console.log(newList)
-    setList(newList);
-    setText("");
-  }
-  return (
-    <div className="App">
-      <h1>Studio Ghibli Films</h1>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          name="text"
-          id ="text"
-          value={text}
-          onChange={(event) => setText(event.target.value)}
-          />
-          <button type="submit">Add</button>
-      </form>
-      <button type="submit" onClick={removeItem}>Remove</button>
-      <ul>
-        {list.map((item, idx) => {
-          return <li key ={item +idx}>{item}</li>
-        })}
-      </ul>
-      <FilmsList />
-    </div>
+return (
+  <BrowserRouter>
+  <nav>
+    <ul>
+      <li>
+        <NavLink to="/"> Home</NavLink>
+      </li>
+      <li>
+        <NavLink to="/FilmsPage">Films</NavLink>
+      </li>
+    </ul>
+  </nav>
+  <Routes>
+    <Route path="/" element={<HomePage />}></Route>
+    <Route path="/FilmsPage" element={<FilmPage />}></Route>
+  </Routes>
+  </BrowserRouter>
   );
 }
 
