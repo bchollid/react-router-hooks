@@ -2,7 +2,7 @@ import './App.css';
 import {Component, useState, useEffect} from "react";
 import React from 'react';
 import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
-import { FilmPage, HomePage } from './pages/index.jsx';
+import { FilmPage, HomePage, SingleFilmPage } from './pages/index.jsx';
 import { FilterFilmsByDirector } from "./helpers/film.helpers.js"
 
 function App(props){
@@ -21,6 +21,7 @@ return (
   <Routes>
     <Route path="/" element={<HomePage />}></Route>
     <Route path="/FilmsPage" element={<FilmPage />}></Route>
+    <Route path="films/:id" element={<SingleFilmPage />}></Route>
   </Routes>
   </BrowserRouter>
   );

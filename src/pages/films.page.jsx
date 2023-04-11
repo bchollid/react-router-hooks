@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { FilmsPage } from ".";
-import { FilterFilmsByDirector, getListOf } from "../helpers/film.helpers"
+import { FilterFilmsByDirector, getListOf, getFilmStats } from "../helpers/film.helpers"
+import {Link} from "react-router-dom";
 
 export function FilmPage() {
   const [list, setList] = useState([]);
@@ -19,12 +19,16 @@ export function FilmPage() {
 
 let filmsByDirector = FilterFilmsByDirector(list, searchDirector)
 let directors = getListOf(list, "director")
+let filmStats = getFilmStats(list)
+let {avg_score, latest, total} = getFilmStats(filmsByDirector)
+
+console.log(filmStats);
 
 return (
   <div>
     <h1>Studio Ghibli Films</h1>
     <form>
-      <label htmlFor="searchDirector">Filter By Director</label>
+      <label htmlFor="searchDirector">Filter By Director: </label>
       <select
         name="searchDirector"
         id="searchDirector"
@@ -41,9 +45,27 @@ return (
         })}
       </select>
     </form>
+    <div>
+  <div>
+    <hr />
+    <span># Of Films: </span>
+    <span>{total}</span>
+  </div>
+  <hr />
+  <div>
+    <span>Average Rating: </span>
+    <span>{avg_score}</span>
+  </div>
+  <hr />
+  <div>
+    <span>Latest Film: </span>
+    <span>{latest}</span>
+  </div>
+  <hr/>
+</div>
     <ul>
       {filmsByDirector.map((film) => {
-        return <li key={film.id}>{film.title}</li>;
+        return <li key={film.id}><Link to={`/films/${film.id}`}>{film.title}</Link></li>;
       })}
     </ul>
   </div>
